@@ -1611,6 +1611,11 @@ accepts@~1.3.5, accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
+anonymous-files@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/anonymous-files/download/anonymous-files-1.0.1.tgz#4d9c0d3351b2e586ff61872f0afb1aac4915f9fc"
+  integrity sha1-TZwNM1Gy5Yb/YYcvCvsarEkV+fw=
+
 anser@^1.4.9:
   version "1.4.10"
   resolved "https://registry.nlark.com/anser/download/anser-1.4.10.tgz?cache=0&sync_timestamp=1630982511571&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fanser%2Fdownload%2Fanser-1.4.10.tgz#befa3eddf282684bd03b63dcda3927aef8c2e35b"

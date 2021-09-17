@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
+import uploadToAnonymousFilesAsync from 'anonymous-files';
 
 export default function App() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -23,12 +24,17 @@ export default function App() {
             return;
         }
 
-        setSelectedImage({localUri: uri});
+        if ( Platform.OS === 'web' ) {
+            let remoteUri = await uploadToAnonymousFilesAsync(uri);
+            setSelectedImage({localUri: uri, remoteUri});
+        } else {
+            setSelectedImage({localUri: uri, remoteUri: null});
+        }
     };
 
     let openShareDialogAsync = async() => {
         if ( !(await Sharing.isAvailableAsync()) ) {
-            alert(`Uh oh, sharing isn't available on your platform! `);
+            alert(`The image is available for sharing at: ${selectedImage.remoteUri}`);
             return;
         }
         await Sharing.shareAsync(selectedImage.localUri);
