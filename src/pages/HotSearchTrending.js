@@ -1,51 +1,21 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, StatusBar, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Button, Text } from 'react-native-elements';
+import * as Linking from 'expo-linking';
 
 const HotSearchTrending = () => {
+    const handleBtnPress = () => {
+        Linking.canOpenURL('sinaweibo').then(r => console.log(r));
+    };
     return (
-        <SafeAreaView style={styles.container}>
-            <ScrollView>
-                <View>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                    <Text h1>some</Text>
-                </View>
-            </ScrollView>
-        </SafeAreaView>
+        <View>
+            <Button onPress={handleBtnPress}  title='weibo'/>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: StatusBar.currentHeight || 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    box: {
-
-    }
+    container: {},
 });
 
 

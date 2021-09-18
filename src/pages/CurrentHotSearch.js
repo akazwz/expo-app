@@ -4,8 +4,6 @@ import { Text } from "react-native-elements";
 import { GetHotSearchesByDuration } from '../api/hot-search';
 
 const Item = ({search}) => {
-    console.log('search:');
-    console.log(search);
     const {content} = search;
     return (
         <View style={styles.item}>
