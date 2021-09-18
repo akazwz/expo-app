@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,22 +6,75 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from 'react-native-elements';
-import HomeScreen from './src/pages/HomeScreen';
-import ImageShare from './src/pages/ImageShare';
 import CurrentHotSearch from './src/pages/CurrentHotSearch';
+import HotSearchHistory from './src/pages/HotSearchHistory';
+import HotSearchTrending from './src/pages/HotSearchTrending';
+import Setting from './src/pages/Setting';
 
 SplashScreen.preventAutoHideAsync().then();
 setTimeout(SplashScreen.hideAsync, 5000);
 
-const HomeStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-const HomeStackScreen = () => {
+const Home = () => {
     return (
-        <HomeStack.Navigator>
-            <HomeStack.Screen name='Home' component={HomeScreen} />
-            <HomeStack.Screen name='HotSearch' component={CurrentHotSearch} />
-        </HomeStack.Navigator>
+        <Tab.Navigator
+            initialRouteName='CurrentHotSearch'
+            screenOptions={({route}) => ({
+                tabBarIcon: ({focused, color, size}) => {
+                    let iconName;
+                    if ( route.name === 'CurrentHotSearch' ) {
+                        iconName = focused
+                            ? 'ios-flame'
+                            : 'ios-flame-outline';
+                    } else if ( route.name === 'HotSearchHistory' ) {
+                        iconName = focused ? 'ios-calendar' : 'ios-time-outline';
+                    } else if ( route.name === 'HotSearchTrending' ) {
+                        iconName = focused ? 'ios-trending-up' : 'ios-trending-down';
+                    } else if ( route.name === 'Setting' ) {
+                        iconName = focused ? 'ios-build' : 'ios-settings-outline';
+                    }
+                    return <Ionicons name={iconName} size={size} color={color}/>;
+                },
+                tabBarActiveTintColor: 'tomato',
+                tabBarInactiveTintColor: 'gray',
+            })}
+        >
+            <Tab.Screen
+                name='CurrentHotSearch'
+                component={CurrentHotSearch}
+                options={{
+                    tabBarBadge: 3,
+                    headerTitleAlign: 'center',
+                    title: '今',
+                }}
+            />
+            <Tab.Screen
+                name='HotSearchHistory'
+                component={HotSearchHistory}
+                options={{
+                    headerTitleAlign: 'center',
+                    title: '史'
+                }}
+            />
+            <Tab.Screen
+                name='HotSearchTrending'
+                component={HotSearchTrending}
+                options={{
+                    headerTitleAlign: 'center',
+                    title: '势'
+                }}
+            />
+            <Tab.Screen
+                name='Setting'
+                component={Setting}
+                options={{
+                    headerTitleAlign: 'center',
+                    title: '设'
+                }}
+            />
+        </Tab.Navigator>
     );
 };
 
@@ -30,38 +83,13 @@ const App = () => {
         <SafeAreaProvider>
             <ThemeProvider>
                 <NavigationContainer>
-                    <Tab.Navigator
-                        initialRouteName='Home'
-                        screenOptions={({route}) => ({
-                            tabBarIcon: ({focused, color, size}) => {
-                                let iconName;
-                                if (route.name === 'Home') {
-                                    iconName = focused
-                                        ? 'home'
-                                        : 'home-outline';
-                                } else if (route.name === 'ImageShare') {
-                                    iconName = focused ? 'image' : 'image-outline';
-                                }
-                                return <Ionicons name={iconName} size={size} color={color} />;
-                            },
-                            tabBarActiveTintColor: 'tomato',
-                            tabBarInactiveTintColor: 'gray',
-                        })}
-                    >
-                        <Tab.Screen
+                    <Stack.Navigator>
+                        <Stack.Screen
                             name='Home'
-                            component={HomeStackScreen}
-                            options={{
-                                tabBarBadge: 3,
-                            }}
-                            initialParams={{post: 'init post'}}
+                            component={Home}
+                            options={{headerShown: false}}
                         />
-                        <Tab.Screen
-                            name='ImageShare'
-                            component={ImageShare}
-                            initialParams={{p: 'this is init p'}}
-                        />
-                    </Tab.Navigator>
+                    </Stack.Navigator>
                 </NavigationContainer>
             </ThemeProvider>
         </SafeAreaProvider>

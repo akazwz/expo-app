@@ -12,6 +12,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "anonymous-files": "^1.0.1",
+    "axios": "^0.21.4",
     "expo": "~42.0.1",
     "expo-image-picker": "~10.2.2",
     "expo-sharing": "~9.2.1",
@@ -22,7 +23,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-appearance": "^0.3.4",
     "react-native-elements": "^3.4.2",
-    "react-native-safe-area-context": "^3.3.2",
+    "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12"

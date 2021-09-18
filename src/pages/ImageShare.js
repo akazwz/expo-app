@@ -1,22 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { ActivityIndicator, Platform, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, ScrollView } from 'react-native';
 import { Image, Text, Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const ImageShare = ({route, navigation}) => {
-
-    const {p} = route.params;
-
+const ImageShare = ({navigation}) => {
     const [selectedImage, setSelectedImage] = useState(null);
-
-    let openImagePickerAsync = async () => {
+    let openImagePickerAsync = async() => {
         let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-        if (permissionResult.granted === false) {
+        if ( permissionResult.granted === false ) {
             alert("Permission to access camera roll is requires!");
             return;
         }
@@ -25,11 +21,11 @@ const ImageShare = ({route, navigation}) => {
         console.log(pickerResult);
 
         const {cancelled, uri} = pickerResult;
-        if (cancelled === true) {
+        if ( cancelled === true ) {
             return;
         }
 
-        if (Platform.OS === 'web') {
+        if ( Platform.OS === 'web' ) {
             let remoteUri = await uploadToAnonymousFilesAsync(uri);
             setSelectedImage({localUri: uri, remoteUri});
         } else {
@@ -37,49 +33,45 @@ const ImageShare = ({route, navigation}) => {
         }
     };
 
-    let openShareDialogAsync = async () => {
-        if (!(await Sharing.isAvailableAsync())) {
+    let openShareDialogAsync = async() => {
+        if ( !(await Sharing.isAvailableAsync()) ) {
             alert(`The image is available for sharing at: ${selectedImage.remoteUri}`);
             return;
         }
         await Sharing.shareAsync(selectedImage.localUri);
     };
 
-    if (selectedImage !== null) {
+    if ( selectedImage !== null ) {
         return (
-            <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.container}>
                 <Image
                     source={{uri: selectedImage.localUri}}
                     style={styles.thumbnail}
-                    placeholderContent={<ActivityIndicator />}
+                    placeholderContent={<ActivityIndicator/>}
                 />
                 <Button
-                    icon={<Icon name='share-alt' />}
+                    icon={<Icon name='share-alt'/>}
                     title='Share this photo'
                     onPress={openShareDialogAsync}
                 />
-            </View>
+            </ScrollView>
         );
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container} scrollEnabled={true}>
             <Image
                 source={{uri: "https://img9.doubanio.com/view/photo/s_ratio_poster/public/p2677520025.webp"}}
                 style={styles.post}
-                placeholderContent={<ActivityIndicator />}
+                placeholderContent={<ActivityIndicator/>}
             />
             <Text h4 h4Style={styles.instructions}>
                 To share a photo from your phone with a friend, just press the button below!
             </Text>
 
-            <Text h4 h4Style={styles.instructions}>
-                the params is {JSON.stringify(p)}
-            </Text>
-
             <Button
                 icon={
-                    <Icon name='image' />
+                    <Icon name='image'/>
                 }
                 title='Pick a photo'
                 onPress={openImagePickerAsync}
@@ -87,7 +79,7 @@ const ImageShare = ({route, navigation}) => {
 
             <Button
                 icon={
-                    <Icon name='arrow-left' />
+                    <Icon name='arrow-left'/>
                 }
                 title='Go back'
                 onPress={() => navigation.goBack()}
@@ -108,15 +100,13 @@ const ImageShare = ({route, navigation}) => {
                     merge: true,
                 })}
             />
-
-            <StatusBar style='auto' />
-        </View>
+            <StatusBar style='auto'/>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
