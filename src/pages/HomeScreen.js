@@ -3,10 +3,14 @@ import { View, StyleSheet } from "react-native";
 import { Button, Text, Divider } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({route, navigation}) => {
+    const {post} = route.params;
     return (
         <View style={styles.homeView}>
             <Text h3>Home Screen</Text>
+            <Text h3>
+                {JSON.stringify(post)}
+            </Text>
             <Divider orientation='horizontal' inset={true} insetType='middle' />
             <Button
                 icon={
@@ -18,7 +22,9 @@ const HomeScreen = ({navigation}) => {
                 }
                 title='Go to ImageShare'
                 onPress={() => {
-                    navigation.navigate('ImageShare');
+                    navigation.navigate('ImageShare', {
+                        p: 'this is p',
+                    });
                 }}
             />
         </View>

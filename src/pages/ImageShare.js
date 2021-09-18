@@ -7,7 +7,10 @@ import * as Sharing from 'expo-sharing';
 import uploadToAnonymousFilesAsync from 'anonymous-files';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const ImageShare = () => {
+const ImageShare = ({route, navigation}) => {
+
+    const {p} = route.params;
+
     const [selectedImage, setSelectedImage] = useState(null);
 
     let openImagePickerAsync = async () => {
@@ -70,6 +73,10 @@ const ImageShare = () => {
                 To share a photo from your phone with a friend, just press the button below!
             </Text>
 
+            <Text h4 h4Style={styles.instructions}>
+                the params is {JSON.stringify(p)}
+            </Text>
+
             <Button
                 icon={
                     <Icon name='image' />
@@ -77,6 +84,31 @@ const ImageShare = () => {
                 title='Pick a photo'
                 onPress={openImagePickerAsync}
             />
+
+            <Button
+                icon={
+                    <Icon name='arrow-left' />
+                }
+                title='Go back'
+                onPress={() => navigation.goBack()}
+            />
+
+            <Button
+                title='Change route params'
+                onPress={() => navigation.setParams({
+                    p: 'change p',
+                })}
+            />
+
+            <Button
+                title='Done'
+                onPress={() => navigation.navigate({
+                    name: 'Home',
+                    params: {post: 'this is post',},
+                    merge: true,
+                })}
+            />
+
             <StatusBar style='auto' />
         </View>
     );
