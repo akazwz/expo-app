@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import { Text } from "react-native-elements";
+import { ListItem, Avatar, Text } from "react-native-elements";
 import { GetHotSearchesByDuration } from '../api/hot-search';
 
 const Item = ({search}) => {
-    const {content} = search;
+    const {content, rank} = search;
     return (
-        <View style={styles.item}>
+        <ListItem bottomDivider style={styles.item}>
+            <Avatar
+                rounded
+                title={rank}
+                titleStyle={{color: 'black'}}
+                containerStyle={{backgroundColor: 'grey'}}
+            />
             <Text style={styles.title}>{content}</Text>
-        </View>
+        </ListItem>
     );
 };
 
@@ -62,12 +68,9 @@ const styles = StyleSheet.create({
     },
     item: {
         backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
     },
     title: {
-        fontSize: 32,
+        fontSize: 16,
     },
 });
 

@@ -17,6 +17,7 @@ setTimeout(SplashScreen.hideAsync, 5000);
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
 const Home = () => {
     return (
         <Tab.Navigator

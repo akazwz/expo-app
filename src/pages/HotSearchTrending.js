@@ -5,11 +5,14 @@ import * as Linking from 'expo-linking';
 
 const HotSearchTrending = () => {
     const handleBtnPress = () => {
-        Linking.canOpenURL('sinaweibo').then(r => console.log(r));
+        if ( !Linking.canOpenURL('sinaweibo://gotohome') ) {
+            alert('please install weibo');
+        }
+        Linking.openURL('sinaweibo://gotohome').then();
     };
     return (
         <View>
-            <Button onPress={handleBtnPress}  title='weibo'/>
+            <Button onPress={handleBtnPress} title='weibo'/>
         </View>
     );
 };
