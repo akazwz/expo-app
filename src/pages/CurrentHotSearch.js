@@ -1,19 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import { ListItem, Avatar, Text } from "react-native-elements";
+import { ListItem, Avatar, Text, Chip } from "react-native-elements";
 import { GetHotSearchesByDuration } from '../api/hot-search';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const Item = ({search}) => {
-    const {content, rank} = search;
+    const {content, rank, hot, tag} = search;
+
+    const handleItemOnPress = () => {
+        alert(content);
+    };
+
+    const handleItemOnLongPress = () => {
+        alert(content + 'long');
+    }
+
     return (
-        <ListItem bottomDivider style={styles.item}>
+        <ListItem
+            bottomDivider
+            onPress={handleItemOnPress}
+            onLongPress={handleItemOnLongPress}
+        >
             <Avatar
                 rounded
                 title={rank}
-                titleStyle={{color: 'black'}}
-                containerStyle={{backgroundColor: 'grey'}}
+                titleStyle={{
+                    color: rank <= 3? '#F24949' : '#F28241',
+                    fontWeight: rank <= 3? '700' : '300',
+                    fontStyle: 'italic',
+                }}
+                containerStyle={{backgroundColor: 'transparent'}}
             />
-            <Text style={styles.title}>{content}</Text>
+            <ListItem.Content>
+                <View style={styles.item}>
+                    <Text style={styles.content}>{content}</Text>
+                    <Ionicons name='ios-flame' size={15} color='#F24949'/>
+                    <Text style={styles.hot}>{hot}</Text>
+                    {tag === '' ?
+                        null :
+                        <>
+                            <Ionicons name='ios-pricetag' size={15} color='#F28241'/>
+                            <Text style={styles.hot}>{tag}</Text>
+                        </>
+                    }
+                </View>
+            </ListItem.Content>
         </ListItem>
     );
 };
@@ -37,7 +69,9 @@ const CurrentHotSearch = () => {
         GetHotSearchesByDuration(start, stop)
             .then(r => {
                 const {code, data, msg} = r.data;
-                console.log('some' + code);
+                if ( code !== 2000 ) {
+                    alert('获取数据失败');
+                }
                 const {image_file, searches, time} = data;
                 setHotSearchData({
                     time: time,
@@ -67,11 +101,15 @@ const styles = StyleSheet.create({
         marginTop: StatusBar.currentHeight || 0,
     },
     item: {
-        backgroundColor: '#f9c2ff',
+        flexDirection: 'row',
     },
-    title: {
-        fontSize: 16,
+    content: {
+        fontSize: 15,
     },
+    hot: {
+        fontSize: 13,
+        fontWeight: '100',
+    }
 });
 
 export default CurrentHotSearch;

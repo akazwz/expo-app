@@ -12,7 +12,7 @@ import HotSearchTrending from './src/pages/HotSearchTrending';
 import Setting from './src/pages/Setting';
 
 SplashScreen.preventAutoHideAsync().then();
-setTimeout(SplashScreen.hideAsync, 5000);
+setTimeout(SplashScreen.hideAsync, 2000);
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
