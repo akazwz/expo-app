@@ -22,16 +22,13 @@ const Item = ({search}) => {
             onPress={handleItemOnPress}
             onLongPress={handleItemOnLongPress}
         >
-            <Avatar
-                rounded
-                title={rank}
-                titleStyle={{
-                    color: rank <= 3? '#F24949' : '#F28241',
-                    fontWeight: rank <= 3? '700' : '300',
-                    fontStyle: 'italic',
-                }}
-                containerStyle={{backgroundColor: 'transparent'}}
-            />
+            <Text style={{
+                color: rank <= 3 ? '#F24949' : '#F28241',
+                fontWeight: rank <= 3 ? '700' : '300',
+                fontStyle: 'italic',
+            }}>
+                {rank}
+            </Text>
             <ListItem.Content>
                 <View style={styles.item}>
                     <Text style={styles.content}>{content}</Text>
@@ -98,7 +95,6 @@ const CurrentHotSearch = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: StatusBar.currentHeight || 0,
     },
     item: {
         flexDirection: 'row',
