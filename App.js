@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider } from 'react-native-elements';
+import { Input, Text, ThemeProvider } from 'react-native-elements';
 import CurrentHotSearch from './src/pages/CurrentHotSearch';
 import HotSearchHistory from './src/pages/HotSearchHistory';
 import HotSearchTrending from './src/pages/HotSearchTrending';
@@ -56,7 +56,9 @@ const Home = () => {
                 component={HotSearchHistory}
                 options={{
                     headerTitleAlign: 'center',
-                    title: '史'
+                    title: '史',
+                    headerShown: false,
+
                 }}
             />
             <Tab.Screen
@@ -64,7 +66,8 @@ const Home = () => {
                 component={HotSearchTrending}
                 options={{
                     headerTitleAlign: 'center',
-                    title: '势'
+                    title: '势',
+                    headerTitle: '',
                 }}
             />
             <Tab.Screen

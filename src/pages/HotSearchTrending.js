@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, ScrollView, StyleSheet, StatusBar, View } from 'react-native';
+import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text, Input } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RNEChartsPro from "react-native-echarts-pro";
 import moment from 'moment';
 import * as Linking from 'expo-linking';
+import Constants from 'expo-constants';
 import { GetHotSearchesByContent } from '../api/hot-search';
 import RankTrending from '../components/RankTrending';
+import SearchBar from '../components/SearchBar';
 
-const HotSearchTrending = () => {
+const HotSearchTrending = ({navigation}) => {
     const start = '2021-08-20-00-00';
     moment.locale('zh-cn');
     const stop = moment().format('YYYY-MM-DD-HH-mm');
@@ -16,6 +18,7 @@ const HotSearchTrending = () => {
     const [hotSearchesDataset, setHotSearchesDataset] = useState(defaultDataset);
     const [showChart, setShowChart] = useState(false);
     const [searchText, setSearchText] = useState();
+
     const getHotSearches = (cont, start, stop) => {
         GetHotSearchesByContent(cont, start, stop)
             .then((res) => {
@@ -41,47 +44,13 @@ const HotSearchTrending = () => {
             alert('获取数据失败');
         });
     };
+
     useEffect(() => {
     }, []);
-    const handleBtnPress = () => {
-        getHotSearches('王一博被扛走了', start, stop);
-    };
+
     return (
-        <View>
-            <View style={{flexDirection: 'row'}}>
-                <Input
-                    leftIcon={
-                        <Ionicons
-                            name='ios-search'
-                            size={17}
-                            color='#8C8C8C'
-                        />
-                    }
-                    placeholder={'大家正在搜: 王一博被扛走了'}
-                    placeholderTextColor='#8C8C8C'
-                    leftIconContainerStyle={{
-                        marginLeft: '3%'
-                    }}
-                    inputContainerStyle={{
-                        borderWidth: 0,
-                        borderBottomWidth: 0,
-                        borderRadius: 9,
-                        height: 35,
-                        backgroundColor: '#D9D9D9'
-                    }}
-                    containerStyle={{
-                        height: 37,
-                        flex: 1,
-                    }}
-                    inputStyle={{
-                        textAlign: 'left',
-                        fontSize: 17,
-                    }}
-                />
-                <TouchableOpacity>
-                    <Text style={{fontSize: 17}}>取消</Text>
-                </TouchableOpacity>
-            </View>
+        <View style={{backgroundColor: 'white', borderWidth: 0}}>
+            <SearchBar showCancel={true} navigation={navigation}/>
             {showChart ? <RankTrending source={hotSearchesDataset}/> : null}
         </View>
     );
