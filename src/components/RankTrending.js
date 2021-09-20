@@ -5,9 +5,6 @@ import { Text } from 'react-native-elements';
 
 const RankTrending = (props) => {
     const rankChartOptions = {
-        title: {
-            text: '排行榜趋势'
-        },
         tooltips: {
             trigger: 'axis',
         },
@@ -42,10 +39,8 @@ const RankTrending = (props) => {
         ],
     };
     return (
-        <View>
-            <Text>
-                this is rank trending.
-            </Text>
+        <View style={{alignItems: 'center'}}>
+            <Text h4>排行榜趋势</Text>
             <RNEChartsPro height={500} option={rankChartOptions} />
         </View>
     );

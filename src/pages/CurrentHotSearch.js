@@ -5,11 +5,11 @@ import { GetHotSearchesByDuration } from '../api/hot-search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-const Item = ({search}) => {
-    const {content, rank, hot, tag} = search;
+const Item = (props) => {
+    const {content, rank, hot, tag} = props.search;
 
     const handleItemOnPress = () => {
-        alert(content);
+        props.navigation.navigate('HotSearchTrending', {content: content});
     };
 
     const handleItemOnLongPress = () => {
@@ -47,7 +47,7 @@ const Item = ({search}) => {
     );
 };
 
-const CurrentHotSearch = () => {
+const CurrentHotSearch = ({navigation}) => {
     const [hotSearchData, setHotSearchData] = useState({
         time: 'time',
         imageFile: 'image file',
@@ -56,7 +56,7 @@ const CurrentHotSearch = () => {
 
     const renderItem = ({item}) => {
         return (
-            <Item search={item}/>
+            <Item search={item} navigation={navigation}/>
         );
     };
 

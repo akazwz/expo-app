@@ -57,8 +57,6 @@ const Home = () => {
                 options={{
                     headerTitleAlign: 'center',
                     title: '史',
-                    headerShown: false,
-
                 }}
             />
             <Tab.Screen
@@ -69,6 +67,7 @@ const Home = () => {
                     title: '势',
                     headerTitle: '',
                 }}
+                initialParams={{content: ''}}
             />
             <Tab.Screen
                 name='Setting'

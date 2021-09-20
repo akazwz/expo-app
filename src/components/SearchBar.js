@@ -7,7 +7,8 @@ import Constants from 'expo-constants';
 const SearchBar = (props) => {
     const [showCancelState, setShowCancelState] = useState(false);
     const [inputTextAlign, setInputTextAlign] = useState('center');
-    const {showCancel, navigation} = props;
+    const [inputValue, setInputValue] = useState('');
+    const {showCancel, navigation, handleSearchText, initValue} = props;
 
     const input = useRef();
 
@@ -30,17 +31,29 @@ const SearchBar = (props) => {
         navigation.setOptions({
             headerStatusBarHeight: Constants.statusBarHeight,
         });
+        handleSearchText('');
     };
+
+    const handleInputTextOnChange = (value) => {
+        setInputValue(value);
+    };
+
+    useEffect(()=>{
+        if ( initValue !== '' ) {
+        }
+    },[]);
 
     return (
         <View style={{flexDirection: 'row', marginTop: 10, marginBottom: 10}}>
             <Input
                 ref={input}
+                value={inputValue}
+                onChangeText={handleInputTextOnChange}
                 onFocus={handleHandleInputOnFocus}
                 returnKeyType='search'
                 onSubmitEditing={() => {
                     setInputTextAlign('left');
-                    alert('输入完毕');
+                    handleSearchText(inputValue);
                 }}
                 leftIcon={
                     <Ionicons

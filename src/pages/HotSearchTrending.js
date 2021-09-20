@@ -10,14 +10,15 @@ import { GetHotSearchesByContent } from '../api/hot-search';
 import RankTrending from '../components/RankTrending';
 import SearchBar from '../components/SearchBar';
 
-const HotSearchTrending = ({navigation}) => {
+const HotSearchTrending = ({route, navigation}) => {
+    const {content} = route.params;
     const start = '2021-08-20-00-00';
     moment.locale('zh-cn');
     const stop = moment().format('YYYY-MM-DD-HH-mm');
     const defaultDataset = [['time', 'rank', 'hot']];
     const [hotSearchesDataset, setHotSearchesDataset] = useState(defaultDataset);
     const [showChart, setShowChart] = useState(false);
-    const [searchText, setSearchText] = useState();
+    const [searchText, setSearchText] = useState('');
 
     const getHotSearches = (cont, start, stop) => {
         GetHotSearchesByContent(cont, start, stop)
@@ -45,12 +46,29 @@ const HotSearchTrending = ({navigation}) => {
         });
     };
 
+    const handleSearchText = (value) => {
+        setSearchText(value);
+    }
+
     useEffect(() => {
-    }, []);
+        if ( searchText !== '' ) {
+            getHotSearches(searchText, start, stop);
+            return;
+        }
+        if ( content !== '' ) {
+            getHotSearches(content, start, stop);
+        }
+    }, [searchText]);
 
     return (
         <View style={{backgroundColor: 'white', borderWidth: 0}}>
-            <SearchBar showCancel={true} navigation={navigation}/>
+            <Text>{'value' + searchText.toString()}</Text>
+            <Text>{'content' + content.toString()}</Text>
+            <SearchBar
+                navigation={navigation}
+                handleSearchText={handleSearchText}
+                initValue={content}
+            />
             {showChart ? <RankTrending source={hotSearchesDataset}/> : null}
         </View>
     );
