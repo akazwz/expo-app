@@ -3,6 +3,7 @@ import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text, Input, Divider } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RNEChartsPro from "react-native-echarts-pro";
+
 import moment from 'moment';
 import { GetHotSearchesByContent } from '../api/hot-search';
 import { Wave, Flow } from 'react-native-animated-spinkit'
@@ -16,7 +17,7 @@ const HotSearchTrending = ({route, navigation}) => {
     const stop = moment().format('YYYY-MM-DD-HH-mm');
     const defaultDataset = [['time', 'rank', 'hot']];
     const [hotSearchesDataset, setHotSearchesDataset] = useState(defaultDataset);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(content);
     const [placeHolder, setPlaceHolder] = useState('大家都在搜:王一博被扛走了');
     const [topicLead, setTopicLead] = useState('');
     const [showTopicLead, setShowTopicLead] = useState(false);
@@ -56,17 +57,14 @@ const HotSearchTrending = ({route, navigation}) => {
         setSearchText(value);
     }
 
+    // tab跳转
     useEffect(() => {
-        if ( searchText !== '' ) {
-            getHotSearches(searchText, start, stop);
-            setShowData(true);
-            return;
-        }
         if ( content !== '' ) {
             getHotSearches(content, start, stop);
             setShowData(true);
+            setSearchText(content);
         }
-    }, [searchText, content]);
+    }, [content]);
 
     return (
         <View style={{backgroundColor: 'white', borderWidth: 0}}>
@@ -74,8 +72,11 @@ const HotSearchTrending = ({route, navigation}) => {
                 navigation={navigation}
                 placeHolder={placeHolder}
                 handleSearchText={handleSearchText}
-                initContent={content}
+                searchText={searchText}
             />
+            <Text>
+                searchText: {searchText}
+            </Text>
             <Divider/>
             {showData ? <View>
                 <View style={{margin: 10}}>

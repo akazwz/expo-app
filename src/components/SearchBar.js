@@ -7,21 +7,16 @@ import Constants from 'expo-constants';
 const SearchBar = (props) => {
     const [showCancelState, setShowCancelState] = useState(false);
     const [inputTextAlign, setInputTextAlign] = useState('center');
-    const [inputValue, setInputValue] = useState('');
-    const {showCancel, navigation, placeHolder, initContent, handleSearchText} = props;
-
+    const {showCancel, navigation, placeHolder, searchText, handleSearchText} = props;
     const input = useRef();
-
     useEffect(() => {
         setShowCancelState(showCancel);
-        if ( initContent !== '' ) {
-            setInputValue(initContent);
-        }
-    }, [showCancel, initContent]);
+    }, [showCancel]);
 
     const handleHandleInputOnFocus = () => {
         setShowCancelState(true);
         setInputTextAlign('left');
+        handleSearchText('');
         input.current.clear();
         navigation.setOptions({
             headerStatusBarHeight: 0,
@@ -39,7 +34,7 @@ const SearchBar = (props) => {
     };
 
     const handleInputTextOnChange = (value) => {
-        setInputValue(value);
+        handleSearchText(value);
     };
 
     useEffect(() => {
@@ -49,13 +44,13 @@ const SearchBar = (props) => {
         <View style={{flexDirection: 'row', marginTop: 10, marginBottom: 10}}>
             <Input
                 ref={input}
-                value={inputValue}
+                value={searchText}
                 onChangeText={handleInputTextOnChange}
                 onFocus={handleHandleInputOnFocus}
                 returnKeyType='search'
                 onSubmitEditing={() => {
                     setInputTextAlign('left');
-                    handleSearchText(inputValue);
+                    handleSearchText(searchText);
                 }}
                 leftIcon={
                     <Ionicons
