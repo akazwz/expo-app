@@ -8,17 +8,21 @@ const SearchBar = (props) => {
     const [showCancelState, setShowCancelState] = useState(false);
     const [inputTextAlign, setInputTextAlign] = useState('center');
     const [inputValue, setInputValue] = useState('');
-    const {showCancel, navigation, placeHolder, handleSearchText} = props;
+    const {showCancel, navigation, placeHolder, initContent, handleSearchText} = props;
 
     const input = useRef();
 
     useEffect(() => {
         setShowCancelState(showCancel);
-    }, [showCancel]);
+        if ( initContent !== '' ) {
+            setInputValue(initContent);
+        }
+    }, [showCancel, initContent]);
 
     const handleHandleInputOnFocus = () => {
         setShowCancelState(true);
         setInputTextAlign('left');
+        input.current.clear();
         navigation.setOptions({
             headerStatusBarHeight: 0,
         });
@@ -39,8 +43,6 @@ const SearchBar = (props) => {
     };
 
     useEffect(() => {
-        if ( initValue !== '' ) {
-        }
     }, []);
 
     return (

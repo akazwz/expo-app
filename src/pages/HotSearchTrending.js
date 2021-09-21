@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, ScrollView, StyleSheet, View } from 'react-native';
-import { Button, Text, Input } from 'react-native-elements';
+import { Button, Text, Input, Divider } from 'react-native-elements';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RNEChartsPro from "react-native-echarts-pro";
 import moment from 'moment';
-import * as Linking from 'expo-linking';
-import Constants from 'expo-constants';
 import { GetHotSearchesByContent } from '../api/hot-search';
+import { Wave, Flow } from 'react-native-animated-spinkit'
 import RankTrending from '../components/RankTrending';
 import SearchBar from '../components/SearchBar';
 
@@ -17,9 +16,12 @@ const HotSearchTrending = ({route, navigation}) => {
     const stop = moment().format('YYYY-MM-DD-HH-mm');
     const defaultDataset = [['time', 'rank', 'hot']];
     const [hotSearchesDataset, setHotSearchesDataset] = useState(defaultDataset);
-    const [showChart, setShowChart] = useState(false);
     const [searchText, setSearchText] = useState('');
-
+    const [placeHolder, setPlaceHolder] = useState('大家都在搜:王一博被扛走了');
+    const [topicLead, setTopicLead] = useState('');
+    const [showTopicLead, setShowTopicLead] = useState(false);
+    const [showChart, setShowChart] = useState(false);
+    const [showData, setShowData] = useState(false);
     const getHotSearches = (cont, start, stop) => {
         GetHotSearchesByContent(cont, start, stop)
             .then((res) => {
@@ -30,6 +32,10 @@ const HotSearchTrending = ({route, navigation}) => {
                 if ( code !== 2000 ) {
                     alert('获取数据失败');
                 }
+                const {searches} = data[0];
+                const {topic_lead} = searches[0];
+                setTopicLead(topic_lead);
+                setShowTopicLead(true);
                 for ( let i = 0; i < data.length; i ++ ) {
                     const hotSearch = data[i];
                     const {time, searches} = hotSearch;
@@ -53,24 +59,34 @@ const HotSearchTrending = ({route, navigation}) => {
     useEffect(() => {
         if ( searchText !== '' ) {
             getHotSearches(searchText, start, stop);
+            setShowData(true);
             return;
         }
         if ( content !== '' ) {
             getHotSearches(content, start, stop);
+            setShowData(true);
         }
-    }, [searchText]);
+    }, [searchText, content]);
 
     return (
         <View style={{backgroundColor: 'white', borderWidth: 0}}>
-            <Text>{'value' + searchText.toString()}</Text>
-            <Text>{'content' + content.toString()}</Text>
             <SearchBar
                 navigation={navigation}
-                placeHolder='大家都在搜:王一博被扛走了'
+                placeHolder={placeHolder}
                 handleSearchText={handleSearchText}
-                initValue={content}
+                initContent={content}
             />
-            {showChart ? <RankTrending source={hotSearchesDataset}/> : null}
+            <Divider/>
+            {showData ? <View>
+                <View style={{margin: 10}}>
+                    {showTopicLead ? <Text>{topicLead}</Text> : <Flow color='#8C8C8C' style={{alignSelf: 'center'}}/>}
+                </View>
+                <Divider/>
+                {showChart ? <RankTrending source={hotSearchesDataset}/>
+                    : <View style={{width: '100%', height: '90%', justifyContent: 'center'}}>
+                        <Wave color='#8C8C8C' style={{alignSelf: 'center'}}/>
+                    </View>}
+            </View> : null}
         </View>
     );
 };
