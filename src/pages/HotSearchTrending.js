@@ -66,6 +66,7 @@ const HotSearchTrending = ({route, navigation}) => {
             <Text>{'content' + content.toString()}</Text>
             <SearchBar
                 navigation={navigation}
+                placeHolder='大家都在搜:王一博被扛走了'
                 handleSearchText={handleSearchText}
                 initValue={content}
             />

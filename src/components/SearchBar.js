@@ -8,7 +8,7 @@ const SearchBar = (props) => {
     const [showCancelState, setShowCancelState] = useState(false);
     const [inputTextAlign, setInputTextAlign] = useState('center');
     const [inputValue, setInputValue] = useState('');
-    const {showCancel, navigation, handleSearchText, initValue} = props;
+    const {showCancel, navigation, placeHolder, handleSearchText} = props;
 
     const input = useRef();
 
@@ -38,10 +38,10 @@ const SearchBar = (props) => {
         setInputValue(value);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         if ( initValue !== '' ) {
         }
-    },[]);
+    }, []);
 
     return (
         <View style={{flexDirection: 'row', marginTop: 10, marginBottom: 10}}>
@@ -62,7 +62,7 @@ const SearchBar = (props) => {
                         color='#8C8C8C'
                     />
                 }
-                placeholder={'大家正在搜: 王一博被扛走了'}
+                placeholder={placeHolder}
                 placeholderTextColor='#8C8C8C'
                 leftIconContainerStyle={{
                     marginLeft: '3%'
