@@ -51,7 +51,7 @@ const ImageShare = ({navigation}) => {
                 />
                 <Button
                     icon={<Icon name='share-alt'/>}
-                    title='Share this photo'
+                    title='ShareScreen this photo'
                     onPress={openShareDialogAsync}
                 />
             </ScrollView>
