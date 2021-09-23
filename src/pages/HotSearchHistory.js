@@ -1,15 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from 'react-native-elements';
+import HotCloudWord from '../components/HotCloudWord';
 
 const HotSearchHistory = () => {
     return (
         <View>
-            <Text h1 h1Style={{
-                marginTop: 30,
-            }}>
-                This is History Hot Search
-            </Text>
+            <HotCloudWord />
         </View>
     );
 };

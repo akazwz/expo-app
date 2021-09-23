@@ -1,5 +1,5 @@
 import React from 'react';
-import RNEChartsPro from "react-native-echarts-pro";
+import RNEChartsPro from 'react-native-echarts-pro';
 import { View } from 'react-native';
 import { Text } from 'react-native-elements';
 

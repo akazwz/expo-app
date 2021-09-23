@@ -13,6 +13,7 @@
     "@react-navigation/native-stack": "^6.1.0",
     "anonymous-files": "^1.0.1",
     "axios": "^0.21.4",
+    "echarts-wordcloud": "^2.0.0",
     "expo": "~42.0.1",
     "expo-constants": "~11.0.1",
     "expo-image-picker": "~10.2.2",
