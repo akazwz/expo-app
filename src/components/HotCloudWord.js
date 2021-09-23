@@ -5,9 +5,13 @@ import RNEChartsPro from "react-native-echarts-pro";
 
 const HotCloudWord = () => {
     const rankChartOptions = {
+        title: {
+            text: 'some'
+        },
         series: [{
             type: 'wordCloud',
             shape: 'circle',
+            maskImage: false,
             left: 'center',
             top: 'center',
             width: '70%',
@@ -44,7 +48,9 @@ const HotCloudWord = () => {
                 name: 'Farrah Abraham',
                 value: 366,
                 // Style of single text
-                textStyle: {}
+                textStyle: {
+                    color: 'red',
+                }
             }]
         }]
     };
