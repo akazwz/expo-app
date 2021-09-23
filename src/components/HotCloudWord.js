@@ -1,58 +1,59 @@
 import React, { useRef } from 'react';
 import { View, Animated, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import CloudWord from "./CloudWord";
+import RNEChartsPro from "react-native-echarts-pro";
 
 const HotCloudWord = () => {
-    const fadeAnim = useRef(new Animated.Value(1)).current;
+    const rankChartOptions = {
+        series: [{
+            type: 'wordCloud',
+            shape: 'circle',
+            left: 'center',
+            top: 'center',
+            width: '70%',
+            height: '80%',
+            right: null,
+            bottom: null,
+            sizeRange: [12, 60],
+            rotationRange: [-90, 90],
+            rotationStep: 45,
+            gridSize: 8,
+            drawOutOfBound: false,
+            layoutAnimation: true,
+            textStyle: {
+                fontFamily: 'sans-serif',
+                fontWeight: 'bold',
+                color: function () {
+                    // Random color
+                    return 'rgb(' + [
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160),
+                        Math.round(Math.random() * 160)
+                    ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                focus: 'self',
 
-    const fadeIn = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 2000,
-        }).start();
+                textStyle: {
+                    textShadowBlur: 10,
+                    textShadowColor: '#333'
+                }
+            },
+            data: [{
+                name: 'Farrah Abraham',
+                value: 366,
+                // Style of single text
+                textStyle: {}
+            }]
+        }]
     };
-
-    const fadeOut = () => {
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 2000,
-        }).start();
-    };
-
-    const words = ['zwz', 'edc', 'wen'];
-
     return (
-        <View style={styles.container}>
-            <Animated.View style={{
-                flexDirection: 'row',
-            }}>
-                {words.map((word, index) => {
-                    return (
-                        <CloudWord
-                            style={{
-                                fontSize: 30,
-                                color: 'dark',
-                                margin: 10,
-                            }}
-                            key={word}
-                            value={word}
-                        />
-                    );
-                })}
-            </Animated.View>
+        <View style={{alignItems: 'center'}}>
+            <Text h4>word cloud</Text>
+            <RNEChartsPro height={500} option={rankChartOptions} />
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    fadingContainer: {
-        backgroundColor: 'powderblue',
-    },
-});
 
 export default HotCloudWord;
