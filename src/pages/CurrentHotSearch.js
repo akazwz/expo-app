@@ -18,17 +18,6 @@ const Item = (props) => {
         alert(content + 'long');
     }
 
-    const imgSrc = () => {
-        switch (icon) {
-            case "热":
-                return hotIcon;
-            case "新":
-                return newIcon;
-            default:
-                return hotIcon;
-        }
-    }
-
     return (
         <ListItem
             bottomDivider
