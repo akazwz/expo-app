@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-import { NavigationContainer } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { extendTheme, NativeBaseProvider, useColorMode } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Input, Text, ThemeProvider } from 'react-native-elements';
 import CurrentHotSearch from './src/pages/CurrentHotSearch';
 import HotSearchHistory from './src/pages/HotSearchHistory';
 import HotSearchTrending from './src/pages/HotSearchTrending';
 import Setting from './src/pages/Setting';
+import { useColorScheme } from 'react-native';
 
 SplashScreen.preventAutoHideAsync().then();
 setTimeout(SplashScreen.hideAsync, 2000);
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
 
 const Home = () => {
     return (
@@ -41,6 +41,7 @@ const Home = () => {
                 tabBarActiveTintColor: 'tomato',
                 tabBarInactiveTintColor: 'gray',
             })}
+
         >
             <Tab.Screen
                 name='CurrentHotSearch'
@@ -81,11 +82,20 @@ const Home = () => {
     );
 };
 
+
 const App = () => {
+    // Define the config
+    const config = {
+        useSystemColorMode: true,
+    };
+
+// extend the theme
+    const customTheme = extendTheme({config});
+    const scheme = useColorScheme();
     return (
         <SafeAreaProvider>
-            <ThemeProvider>
-                <NavigationContainer>
+            <NativeBaseProvider theme={customTheme}>
+                <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
                     <Stack.Navigator>
                         <Stack.Screen
                             name='Home'
@@ -94,7 +104,7 @@ const App = () => {
                         />
                     </Stack.Navigator>
                 </NavigationContainer>
-            </ThemeProvider>
+            </NativeBaseProvider>
         </SafeAreaProvider>
     );
 };

@@ -26,6 +26,8 @@
     "jcore-react-native": "^1.9.4",
     "jpush-react-native": "^2.8.7",
     "moment": "^2.29.1",
+    "native-base": "^3.2.0",
+    "randomcolor": "^0.6.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
@@ -38,9 +40,12 @@
     "react-native-screens": "~3.4.0",
     "react-native-skeleton-content": "^1.0.22",
     "react-native-spinkit": "^1.5.1",
+    "react-native-svg": "12.1.1",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
-    "react-native-webview": "11.6.2"
+    "react-native-webview": "11.6.2",
+    "styled-components": "^5.3.1",
+    "styled-system": "^5.1.5"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
