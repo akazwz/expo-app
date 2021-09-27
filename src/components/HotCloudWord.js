@@ -1,24 +1,21 @@
-import React, { useRef } from 'react';
-import { View, Animated, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-elements';
+import React from 'react';
+import { View } from 'react-native';
 import RNEChartsPro from "react-native-echarts-pro";
 
-const HotCloudWord = () => {
-    const rankChartOptions = {
-        title: {
-            text: 'some'
-        },
+const HotCloudWord = (props) => {
+    const chartOptions = {
+        title: {},
         series: [{
             type: 'wordCloud',
             shape: 'circle',
             maskImage: false,
             left: 'center',
             top: 'center',
-            width: '70%',
-            height: '80%',
+            width: '100%',
+            height: '100%',
             right: null,
             bottom: null,
-            sizeRange: [12, 60],
+            sizeRange: [15, 50],
             rotationRange: [-90, 90],
             rotationStep: 45,
             gridSize: 8,
@@ -28,7 +25,6 @@ const HotCloudWord = () => {
                 fontFamily: 'sans-serif',
                 fontWeight: 'bold',
                 color: function () {
-                    // Random color
                     return 'rgb(' + [
                         Math.round(Math.random() * 160),
                         Math.round(Math.random() * 160),
@@ -38,26 +34,17 @@ const HotCloudWord = () => {
             },
             emphasis: {
                 focus: 'self',
-
                 textStyle: {
                     textShadowBlur: 10,
                     textShadowColor: '#333'
                 }
             },
-            data: [{
-                name: 'Farrah Abraham',
-                value: 366,
-                // Style of single text
-                textStyle: {
-                    color: 'red',
-                }
-            }]
+            data: props.data
         }]
     };
     return (
         <View style={{alignItems: 'center'}}>
-            <Text h4>word cloud</Text>
-            <RNEChartsPro height={500} option={rankChartOptions} />
+            <RNEChartsPro height={210} option={chartOptions} />
         </View>
     );
 };

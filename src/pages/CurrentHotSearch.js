@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { ListItem, Avatar, Text, Image } from "react-native-elements";
 import { GetCurrentHotSearch, GetHotSearchesByDuration } from '../api/hot-search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import * as hotIcon from '../../assets/icon/icon_hot.png';
 import * as newIcon from '../../assets/icon/icon_new.png';
+import HotCloudWord from "../components/HotCloudWord";
+import { Screen } from "react-native-screens";
 
 const Item = (props) => {
     const {rank, content, link, hot, tag, icon} = props.search;
@@ -58,6 +60,8 @@ const Item = (props) => {
 };
 
 const CurrentHotSearch = ({navigation}) => {
+    const [wordData, setWordData] = useState([]);
+
     const [hotSearchData, setHotSearchData] = useState({
         time: 'time',
         searches: [],
@@ -77,6 +81,14 @@ const CurrentHotSearch = ({navigation}) => {
                     alert('获取数据失败');
                 }
                 const {searches, time} = data;
+                const wordArr = searches.slice(0, 20)
+                let wordDataArr = [];
+                wordArr.map((search) => {
+                    const {content, hot} = search;
+                    wordDataArr.push({name: content, value: hot})
+                    return "";
+                });
+                setWordData(wordDataArr);
                 setHotSearchData({
                     time: time,
                     searches: searches,
@@ -87,6 +99,7 @@ const CurrentHotSearch = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
+                ListHeaderComponent={<HotCloudWord data={wordData} />}
                 data={hotSearchData.searches}
                 renderItem={renderItem}
                 keyExtractor={item => {

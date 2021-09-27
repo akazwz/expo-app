@@ -5,7 +5,7 @@ import HotCloudWord from '../components/HotCloudWord';
 const HotSearchHistory = () => {
     return (
         <View>
-            <HotCloudWord />
+
         </View>
     );
 };
