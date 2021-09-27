@@ -1,19 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
-import { ListItem, Avatar, Text, Chip } from "react-native-elements";
-import { GetHotSearchesByDuration } from '../api/hot-search';
+import { ListItem, Avatar, Text, Image } from "react-native-elements";
+import { GetCurrentHotSearch, GetHotSearchesByDuration } from '../api/hot-search';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import * as hotIcon from '../../assets/icon/icon_hot.png';
+import * as newIcon from '../../assets/icon/icon_new.png';
 
 const Item = (props) => {
-    const {content, rank, hot, tag} = props.search;
-
+    const {rank, content, link, hot, tag, icon} = props.search;
+    // press
     const handleItemOnPress = () => {
-        props.navigation.navigate('HotSearchTrending', {content: content});
+        //props.navigation.navigate('HotSearchTrending', {content: content});
+        alert(link);
     };
-
+    // long press
     const handleItemOnLongPress = () => {
         alert(content + 'long');
+    }
+
+    const imgSrc = () => {
+        switch (icon) {
+            case "热":
+                return hotIcon;
+            case "新":
+                return newIcon;
+            default:
+                return hotIcon;
+        }
     }
 
     return (
@@ -32,16 +45,24 @@ const Item = (props) => {
             <ListItem.Content>
                 <View style={styles.item}>
                     <Text style={styles.content}>{content}</Text>
-                    <Ionicons name='ios-flame' size={15} color='#F24949'/>
+                    <Ionicons name='ios-flame' size={15} color='#F24949' />
                     <Text style={styles.hot}>{hot}</Text>
                     {tag === '' ?
                         null :
                         <>
-                            <Ionicons name='ios-pricetag' size={15} color='#F28241'/>
+                            <Ionicons name='ios-pricetag' size={15} color='#F28241' />
                             <Text style={styles.hot}>{tag}</Text>
                         </>
                     }
+                    {icon === '' ?
+                        null :
+                        <Image
+                            source={icon === '热' ? hotIcon : newIcon}
+                            style={styles.icon}
+                        />
+                    }
                 </View>
+
             </ListItem.Content>
         </ListItem>
     );
@@ -50,29 +71,25 @@ const Item = (props) => {
 const CurrentHotSearch = ({navigation}) => {
     const [hotSearchData, setHotSearchData] = useState({
         time: 'time',
-        imageFile: 'image file',
         searches: [],
     });
 
     const renderItem = ({item}) => {
         return (
-            <Item search={item} navigation={navigation}/>
+            <Item search={item} navigation={navigation} />
         );
     };
 
     useEffect(() => {
-        const start = '';
-        const stop = '';
-        GetHotSearchesByDuration(start, stop)
+        GetCurrentHotSearch()
             .then(r => {
                 const {code, data, msg} = r.data;
-                if ( code !== 2000 ) {
+                if (code !== 2000) {
                     alert('获取数据失败');
                 }
-                const {image_file, searches, time} = data;
+                const {searches, time} = data;
                 setHotSearchData({
                     time: time,
-                    imageFile: image_file,
                     searches: searches,
                 });
             });
@@ -105,7 +122,11 @@ const styles = StyleSheet.create({
     hot: {
         fontSize: 13,
         fontWeight: '100',
-    }
+    },
+    icon: {
+        width: 17,
+        height: 17,
+    },
 });
 
 export default CurrentHotSearch;
