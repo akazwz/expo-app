@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useColorScheme } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { extendTheme, NativeBaseProvider, useColorMode } from 'native-base';
+import { extendTheme, NativeBaseProvider } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import CurrentHotSearch from './src/pages/CurrentHotSearch';
 import HotSearchHistory from './src/pages/HotSearchHistory';
 import HotSearchTrending from './src/pages/HotSearchTrending';
 import Setting from './src/pages/Setting';
-import { useColorScheme } from 'react-native';
 
 SplashScreen.preventAutoHideAsync().then();
 setTimeout(SplashScreen.hideAsync, 2000);
